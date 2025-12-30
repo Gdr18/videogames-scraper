@@ -69,7 +69,7 @@
         }
 
         .btn {
-            width: 300px;
+            width: 100%;
             padding: 15px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -133,29 +133,25 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
-
-        .page-navigation {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-        }
-
+        
         .buttons-container {
-            display: flex;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin-top: 20px;
         }
 
         #pageDisplay {
-            height: 50px;
-            width: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #333;
             font-weight: 700;
-            border: 2px solid #333;
+            font-size: 1.2em;
+            padding: 10px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-radius: 10px;
+            min-width: 40px;
         }
         
         .message {
@@ -185,21 +181,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎮 Buscador de Videojuegos</h1>
+        <h1><a href="/">🎮 Buscador de Videojuegos</a></h1>
         
         <form method="POST" action="/search/0" id="searchForm">
             <div class="form-group">
                 <label for="platform">Selecciona una plataforma:</label>
                 <select name="platform" id="platform" required>
                     <option value="">-- Selecciona una opción --</option>
-                    <option value="ps4">PlayStation 4</option>
-                    <option value="ps5">PlayStation 5</option>
-                    <option value="xbox-one">Xbox One</option>
-                    <option value="xbox-series-xs">Xbox Series</option>
-                    <option value="nintendo-switch">Nintendo Switch</option>
-                    <option value="nintendo-switch-2">Nintendo Switch 2</option>
-                    <option value="pc">PC</option>
-                    <option value="android">Android</option>
+                    <option value="ps4" {% if platform == 'ps4' %}selected{% endif %}>PlayStation 4</option>
+                    <option value="ps5" {% if platform == 'ps5' %}selected{% endif %}>PlayStation 5</option>
+                    <option value="xbox-one" {% if platform == 'xbox-one' %}selected{% endif %}>Xbox One</option>
+                    <option value="xbox-series-xs" {% if platform == 'xbox-series-xs' %}selected{% endif %}>Xbox Series</option>
+                    <option value="nintendo-switch" {% if platform == 'nintendo-switch' %}selected{% endif %}>Nintendo Switch</option>
+                    <option value="nintendo-switch-2" {% if platform == 'nintendo-switch-2' %}selected{% endif %}>Nintendo Switch 2</option>
+                    <option value="pc" {% if platform == 'pc' %}selected{% endif %}>PC</option>
+                    <option value="android" {% if platform == 'android' %}selected{% endif %}>Android</option>
                 </select>
             </div>
             
@@ -214,7 +210,8 @@
             <div class="json-container">
                 <pre id="jsonDisplay">{{ data | tojson(indent=2) }}</pre>
             </div>
-            <div class="page-navigation">
+            
+            <div class="buttons-container">
                 <button type="button" class="btn btn-info" onclick="changePage('previous')">
                     Página Anterior ⬅️
                 </button>
@@ -222,8 +219,6 @@
                 <button type="button" class="btn btn-info" onclick="changePage('next')">
                     ➡️ Siguiente Página
                 </button>
-            </div>
-            <div class="buttons-container">
                 <button type="button" class="btn btn-secondary" onclick="downloadJson()">
                     💾 Descargar JSON
                 </button>
@@ -302,22 +297,18 @@
         async function changePage(direction) {
             if (page === 0 && direction === 'previous') return;
 
-            if (direction === 'previous') {
-                page--;
-            } else {
-                page++;
-            }
-
             try {
                 const response = await fetch(`/search/${page}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ platform: actualPlatform })
+                    body: JSON.stringify({ platform: actualPlatform, direction: direction })
                 });
                 
                 const result = await response.json();
+
+                console.log(result);
                 
                 if (response.ok) {
                     // Actualizar el JSON mostrado

@@ -6,7 +6,10 @@ from videogame_model import VideogameModel
 from enum_platforms import Platform
 
 def get_data(platform: str, page: int) -> list[dict]:
-	url = f'https://www.3djuegos.com/{platform}/juegos/mejores/{page if page > 1 else ""}'
+	if platform.replace("-", "_").upper() == Platform.NINTENDO_SWITCH_2.name:
+		url = f'https://www.3djuegos.com/{platform}/juegos/{page if page > 0 else ""}'
+	else:
+		url = f'https://www.3djuegos.com/{platform}/juegos/mejores/{page if page > 0 else ""}'
 	web_data = requests.get(url)
 	soup = BeautifulSoup(web_data.content, 'html.parser')
 	

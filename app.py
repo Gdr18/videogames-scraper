@@ -15,9 +15,13 @@ def index():
 @app.route('/search/<int:page>', methods=['POST'])
 def search(page):
     platform = request.form.get('platform', '') or request.json.get('platform', '')
+    # direction = request.get_json().get('direction', '')
     
     if not platform:
         return render_template('index.html', error="Por favor selecciona una plataforma")
+    
+    # if direction:
+    #     page += 1 if direction == 'next' else -1
     
     data = get_data(platform, page)
     
