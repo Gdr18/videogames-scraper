@@ -1,16 +1,13 @@
-from dotenv import load_dotenv
-import os
+from flask import current_app
 import requests
 
-from platform_enum import PlatformEnum
-
-load_dotenv(".env.prod")
+from src.platform_enum import PlatformDBEnum
 
 def login_api() -> str:
-	url = f"{os.getenv("API_URL")}/auth/login"
+	url = f"{current_app.config["API_URL"]}/auth/login"
 	payload = {
-		"email": os.getenv("API_EMAIL"),
-		"password": os.getenv("API_PASSWORD")
+		"email": current_app.config["API_EMAIL"],
+		"password": current_app.config["API_PASSWORD"]
 	}
 	headers = {
 		"Content-Type": "application/json"
@@ -23,7 +20,7 @@ def login_api() -> str:
 
 
 def post_game(videogame: dict) -> str:
-	valid_platforms = [platform.value for platform in PlatformEnum]
+	valid_platforms = [platform.value for platform in PlatformDBEnum]
 	if not videogame.get("platform") in valid_platforms:
 		raise ValueError(f"Plataformas válidas para el registro: {valid_platforms}")
 	

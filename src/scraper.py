@@ -1,9 +1,8 @@
 import requests
-import re
 from bs4 import BeautifulSoup
 
-from videogame_model import VideogameModel
-from platform_enum import PlatformEnum
+from src.videogame_model import VideogameModel
+from src.platform_enum import PlatformScrapperEnum
 
 def get_data(platform: str, page: int) -> list[dict]:
 	if platform == "nintendo-switch-2":
@@ -26,10 +25,12 @@ def get_data(platform: str, page: int) -> list[dict]:
 		videogame = soup_game.find("article")
 		
 		release_and_pegi = videogame.find("dt", string="Lanzamiento:").next_sibling.text.strip()
-		limit = release_and_pegi.find(" (")
-		release = release_and_pegi[:limit]
-		pegi = release_and_pegi[limit + 8:-1]
+		limit = release_and_pegi.find("(")
+		release = (release_and_pegi[:limit] if limit != -1 else release_and_pegi).strip()
+		pegi = release_and_pegi[limit + 7:-1]
+		
 		tag_price = videogame.find("a", string=lambda t: t and "€" in t)
+		
 		price = None
 		
 		if tag_price:
@@ -40,7 +41,7 @@ def get_data(platform: str, page: int) -> list[dict]:
 		data_game = {
 			"title": videogame.find("h1").text,
 			"description": description.text,
-			"platform": getattr(PlatformEnum, platform.replace("-", "_").upper(), None).value,
+			"platform": getattr(PlatformScrapperEnum, platform.replace("-", "_").upper(), None).value,
 			"gender": videogame.find("dt", class_="edit_tematicas").next_element.next_element.next_element.text,
 			"img_url": videogame.find("img", class_="dib mar_b10").get("data-src"),
 			"release": release,

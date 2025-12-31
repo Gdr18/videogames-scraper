@@ -1,10 +1,17 @@
 from flask import Flask, render_template, request, jsonify, send_file
+from config import CONFIG
 
-from scrapper import get_data
-from post_videogame import post_game
-from json_maker import create_json
+from src.scraper import get_data
+from src.post_videogame import post_game
+from src.json_maker import create_json
+from src.platform_enum import PlatformScrapperEnum
 
-app = Flask(__name__)
+def create_app(config: dict) -> Flask:
+    application = Flask(__name__)
+    application.config.from_object(config)
+    return application
+
+app = create_app(CONFIG)
 
 @app.route('/')
 def index():
@@ -14,10 +21,11 @@ def index():
 def search(page):
     platform = request.form.get('platform', '')
     direction = request.form.get('direction', '')
-    page -= 1
     
-    if not platform:
+    if (not platform) or (platform.replace("-", "_").upper() not in [platform.name for platform in PlatformScrapperEnum]):
         return render_template('index.html', error="Por favor selecciona una plataforma")
+    
+    page -= 1
     
     if direction:
         page += 1 if direction == 'next' else -1
@@ -59,8 +67,3 @@ def send_data():
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
-

@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime
 
-def create_json(data):
+def create_json(data: list[dict]) -> tuple:
 	filename = f"videogames_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
 	filepath = os.path.join('temp', filename)
 	

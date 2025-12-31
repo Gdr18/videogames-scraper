@@ -32,7 +32,9 @@
             
             <button type="submit" class="btn">🔍 Buscar</button>
         </form>
-        
+
+        <div class="loader" hidden></div>
+
         <div class="results-section">
             <h2 class="results-title"></h2>
             
@@ -78,6 +80,14 @@
 
         document.querySelector('.results-title').textContent = `📋 Resultados JSON: ${lengthJSON}`;
 
+        function showContainer(className) {
+            document.querySelector(`.{className}`).hidden = false;
+        }
+
+        function hideContainer(className) {
+            document.querySelector(`.{className}`).hidden = true;
+        }
+
         function showMessage(text, type) {
             const container = document.getElementById('messageContainer');
             container.innerHTML = `<div class="message ${type}">${text}</div>`;
@@ -117,6 +127,7 @@
         }
         
         async function sendDB() {
+            showContainer('loader');
             try {
                 const response = await fetch('/send-db', {
                     method: 'POST',
@@ -127,16 +138,18 @@
                 });
                 
                 const result = await response.json();
+
+                hideContainer('loader');
                 
                 if (response.ok) {
                     showMessage('✅ ' + result.message, 'success');
                 } else {
                     showMessage('❌ Error: ' + result.error, 'error');
-                    console.error('Error details:', result.error);
+                    console.log(result);
                 }
             } catch (error) {
                 showMessage('❌ Error al enviar: ' + error.message, 'error');
-                console.error('Error details:', error);
+                console.log(error);
             }
         }
     </script>
