@@ -1,85 +1,141 @@
 .hidden {
-    display: none;
+	display: none;
 }
 
-.btn {
-    margin-bottom: 15px;
+.container .loader-container .loader {
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .results-section {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 2px solid #eee;
+	padding-top: 15px;
+	border-top: 2px solid #eee;
 
-    .results-title {
-        color: #333;
-        margin-bottom: 20px;
-        font-size: 1.3em;
-    }
+	.results-title {
+		color: #333;
+		font-size: 1.3em;
+	}
 
-    .json-container {
-        background-color: #f8f9fa;
-        border: 2px solid #ddd;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        max-height: 30dvh;
-        overflow-y: auto;
+	.json-container {
+		margin-top: 20px;
+		margin-bottom: 20px;
+		background-color: #f8f9fa;
+		border: 2px solid #ddd;
+		border-radius: 10px;
+		padding: 20px;
+		max-height: 30dvh;
+		overflow-y: auto;
 
-        pre {
-            margin: 0;
-            color: #333;
-            font-family: 'Courier New', monospace;
-            font-size: 0.8em;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-    }
+		pre {
+			margin: 0;
+			color: #333;
+			font-family: "Courier New", monospace;
+			font-size: 0.8em;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+		}
+	}
 
-    .buttons-container {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 20px;
-        gap: 15px;
-        .btn-info {
-            width: fit-content;
-        }
-        .page-buttons-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
+	.buttons-container {
+		display: flex;
+		justify-content: space-around;
 
-            #pageDisplay {
-                height: 50px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #333;
-                font-weight: 700;
-                font-size: 1.1em;
-                padding: 10px;
-                border-radius: 10px;
-                border: 2px solid #ddd;
-            }
-            .btn-save {
-                background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
-            }
-            .btn-send {
-                background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
-            }
-        }
-    }
+		.page-buttons-container {
+			display: flex;
+			align-items: center;
+			gap: 20px;
 
-    .message {
-        padding: 12px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        text-align: center;
-        font-weight: 600;
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border-left: 4px solid #28a745;
-        }
-    }
+			#pageDisplay {
+				height: 35px;
+				width: 35px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #333;
+				font-weight: 700;
+				font-size: 1.1em;
+				padding: 20px;
+				border-radius: 10px;
+				border: 2px solid #333;
+			}
+		}
+		.btn-info {
+			width: fit-content;
+			padding: 10px;
+		}
+		.btn-save {
+			background: linear-gradient(135deg, #43cea2 0%, #329b7a 100%);
+			padding: 15px 30px;
+		}
+		.btn-send {
+			background: linear-gradient(135deg, #ff9966 0%, #cc4c4e 100%);
+			padding: 15px 30px;
+		}
+	}
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+	.results-section {
+		.json-container {
+			max-height: 35dvh;
+			padding: 18px;
+
+			pre {
+				font-size: 0.75em;
+			}
+		}
+
+		.buttons-container {
+			gap: 15px;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.container .loader-container .loader {
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
+
+	.results-section {
+		padding-top: 10px;
+
+		.results-title {
+			font-size: 1.1em;
+		}
+
+		.json-container {
+			margin-top: 15px;
+			margin-bottom: 15px;
+			padding: 15px;
+			max-height: 35dvh;
+
+			pre {
+				font-size: 0.65em;
+			}
+		}
+
+		.buttons-container {
+			justify-content: space-between;
+
+			.page-buttons-container {
+				gap: 10px;
+
+				#pageDisplay {
+					height: 30px;
+					width: 30px;
+				}
+
+				.btn-info {
+					padding: 8px;
+					font-size: 0.9em;
+				}
+			}
+
+			.btn-send,
+			.btn-save {
+				padding: 12px;
+			}
+		}
+	}
 }

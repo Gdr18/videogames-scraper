@@ -7,7 +7,7 @@ from src.parsers import parse_list_games, parse_game
 
 def get_data(platform: str, page: int) -> list[dict]:
 	platform_formatted = PlatformScrapperEnum[platform.replace("-", "_").upper()]
-	url_page = (current_app.config["URL_PARSER_SWITCH"] if platform_formatted == PlatformScrapperEnum.NINTENDO_SWITCH_2 else current_app.config["URL_PARSER"])
+	url_page = (current_app.config["URL_PARSER_SWITCH_2"] if platform_formatted == PlatformScrapperEnum.NINTENDO_SWITCH_2 else current_app.config["URL_PARSER"])
 	url_formatted = url_page.format(platform=platform, page=("" if page == 0 else page))
 	
 	html_web = http_request(url_formatted).content
@@ -25,7 +25,7 @@ def get_data(platform: str, page: int) -> list[dict]:
 			videogame = VideogameModel(**game)
 			games_data.append(videogame.model_dump())
 		except Exception as e:
-			print(f"Error scraping '{game['title']}': {e}")
+			print(f"Error scraping: {e}")
 			continue
 
 	return games_data

@@ -29,8 +29,10 @@ def parse_game(html_content: str) -> Union[dict, None]:
 	release = (release_and_pegi[:limit_release] if limit_release != -1 else release_and_pegi).strip()[-4:]
 	if not release.isdigit():
 		raise ValueError("El campo 'release' no son dígitos")
-	
-	pegi = release_and_pegi[limit_release + 7:-1]
+
+	pegi_start = release_and_pegi.find("+")
+	pegi_end = release_and_pegi.find(")", pegi_start)
+	pegi = release_and_pegi[pegi_start:pegi_end].strip()
 	
 	tag_price = tag_price.get_text(strip=True)
 	limit_pegi = tag_price.find("€")

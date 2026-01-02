@@ -14,7 +14,7 @@
 			<h3>~ Scrapping de datos de Videojuegos ~</h3>
 
 			{% if error %}
-			<div class="error">{{ error }}</div>
+			<div class="message error">{{ error }}</div>
 			{% endif %}
 
 			<form method="POST" action="/search/1" onsubmit="showContainer('loader')">
@@ -36,8 +36,7 @@
 				<button type="submit" class="btn">🔍 Buscar</button>
 			</form>
 
-        	<div class="loader-container"><span class="loader" hidden></span></div>
-
+			<div class="loader-container"><span class="loader" hidden></span></div>
 		</div>
 
 		<script>
@@ -45,10 +44,5 @@
 				document.querySelector(`.${className}`).hidden = false;
 			}
 		</script>
-
 	</body>
 </html>
-
-
-
-
