@@ -68,17 +68,21 @@ pip install -r requirements.txt
 4. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno:
 
 ```bash
-API_URL=https://localhost:5000
+API_LOGIN=https://localhost:5000/auth/login
+API_POST_GAME=https://localhost:5000/games/
 API_EMAIL=admin_user@gmail.com
 API_PASSWORD=*******
+TOKEN=your_token_if_any
 ENVIRONMENT=development
 URL_PARSER=https://www.videojuegos.com/{platform}/juegos/mejores/{page}
 URL_PARSER_SWITCH_2=https://www.videojuegos.com/{platform}/juegos/{page}
 ```
 
-- `API_URL`: URL base de la API
-- `API_EMAIL`: Correo electrónico del usuario administrador (en el caso de que haga falta login)
-- `API_PASSWORD`: Contraseña del usuario administrador (en el caso de que haga falta login)
+- `API_LOGIN`: URL de login de la API
+- `API_POST_GAME`: URL para registrar videojuegos en la API
+- `API_EMAIL`: Correo electrónico del usuario administrador (opcional, en el caso de que haga falta login)
+- `API_PASSWORD`: Contraseña del usuario administrador (opcional, en el caso de que haga falta login)
+- `TOKEN`: Token de autenticación (opcional, si no se proporciona se hará login automáticamente)
 - `ENVIRONMENT`: Entorno de ejecución (`development` o `production`)
 - `URL_PARSER`: URL base para el scraping
 - `URL_PARSER_SWITCH_2`: URL alternativa para el scraping de Nintendo Switch 2

@@ -6,11 +6,13 @@ load_dotenv(".env.prod")
 
 class Config:
     PORT = int(os.getenv("PORT", 4000))
-    API_URL = os.getenv("API_URL")
-    API_EMAIL = os.getenv("API_EMAIL")
-    API_PASSWORD = os.getenv("API_PASSWORD")
+    TOKEN = os.getenv("TOKEN", None)
+    API_LOGIN = os.getenv("API_LOGIN", None)
+    API_POST_GAME = os.getenv("API_POST_GAME", None)
+    API_EMAIL = os.getenv("API_EMAIL", None)
+    API_PASSWORD = os.getenv("API_PASSWORD", None)
     URL_PARSER = os.getenv("URL_PARSER")
-    URL_PARSER_SWITCH_2 = os.getenv("URL_PARSER_SWITCH_2")
+    URL_PARSER_SWITCH_2 = os.getenv("URL_PARSER_SWITCH_2", None)
 
 
 class DevelopmentConfig(Config):
