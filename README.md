@@ -1,9 +1,9 @@
 # 🎮 Games JSON - Scraper
 
-App SSR (Server-Side Rendering) cuya finalidad es proveer objetos json con información de videojuegos. Esta información se obtiene escrapeando páginas web de videojuegos.
+App SSR (Server-Side Rendering) cuya finalidad es proveer objetos JSON con información de videojuegos. Esta información se obtiene escrapeando páginas web de videojuegos.
 
-![Captura de pantalla de la app](src/static/screenshot.png)
-![Captura de pantalla de la app](src/static/screenshot_2.png)
+![Captura de pantalla de la app](src/static/screenshot.webp)
+![Captura de pantalla de la app](src/static/screenshot_2.webp)
 
 ---
 
