@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request, jsonify, send_file
-from config import CONFIG
 
-from src.scraper import get_data
-from src.app_requests import post_game_api
-from src.json_maker import create_json_file
-from src.platform_enum import PlatformScrapperEnum
+from config import CONFIG
+from src.scrapers.scraper_3djuegos import get_data
+from src.requests.api_requests import post_game_api
+from src.services.create_file_and_dir import create_json_file
 
 
 def create_app(config: dict) -> Flask:
@@ -96,4 +95,19 @@ def send_data():
         )
     except Exception as e:
         print(f"Error al enviar los datos a la API: {e}")
-        return jsonify({"error": "Error al registrar los datos"}), 500
+        return jsonify({"error": f"Error en el registro. {e}"}), 500
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
+
+
+@app.errorhandler(405)
+def method_not_allowed(e):
+    return render_template("404.html"), 405
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("500.html"), 500

@@ -2,9 +2,12 @@
 	display: none;
 }
 
-.container .loader-container .loader {
-	margin-top: 20px;
-	margin-bottom: 20px;
+.container {
+	max-height: none;
+	.loader-container .loader {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
 }
 
 .results-section {
@@ -46,17 +49,23 @@
 			gap: 20px;
 
 			#pageDisplay {
+				-moz-appearance: textfield;
 				height: 35px;
 				width: 35px;
+				padding: 5px 5px 0px 10px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				color: #333;
 				font-weight: 700;
 				font-size: 1.1em;
-				padding: 20px;
 				border-radius: 10px;
 				border: 2px solid #333;
+				&::-webkit-inner-spin-button,
+				&::-webkit-outer-spin-button {
+					-webkit-appearance: none;
+					margin: 0;
+				}
 			}
 		}
 		.btn-info {

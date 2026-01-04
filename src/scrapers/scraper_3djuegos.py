@@ -1,9 +1,9 @@
 from flask import current_app
 
-from src.videogame_model import VideogameModel
-from src.platform_enum import PlatformScrapperEnum
-from src.app_requests import http_request
-from src.parsers import parse_list_games, parse_game
+from src.models.videogame_model import VideogameModel
+from src.enums.platform_enum import PlatformScrapperEnum
+from src.requests.base_request import http_request
+from src.parsers.parsers_3djuegos import parse_list_games, parse_game
 
 def get_data(platform: str, page: int) -> list[dict]:
 	platform_formatted = PlatformScrapperEnum[platform.replace("-", "_").upper()]

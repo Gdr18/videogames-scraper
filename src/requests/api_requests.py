@@ -1,21 +1,8 @@
 from flask import current_app
-import requests
-from typing import Literal
 
-from src.platform_enum import PlatformDBEnum
+from src.enums.platform_enum import PlatformDBEnum
+from src.requests.base_request import http_request
 
-def http_request(url: str, method: Literal["get", "post"] = "get", payload: dict = None, token: str = None) -> requests.Response:
-	headers = {
-		"Content-Type": "application/json",
-		"Authorization": f"Bearer {token}" if token else None
-	}
-	
-	if method == "post":
-		return requests.post(url, json=payload, headers=headers)
-	
-	return requests.get(url)
-
-	
 
 def login_api() -> str:
 	url = f"{current_app.config["API_URL"]}/auth/login"

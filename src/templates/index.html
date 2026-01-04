@@ -4,14 +4,15 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<link rel="stylesheet" href="../static/styles/base.css" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}" />
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" />
 
-		<title>JSONs de Videojuegos</title>
+		<title>Games JSON</title>
 	</head>
 	<body>
 		<div class="container">
-			<h1><a href="/">Games' JSON 🎮</a></h1>
-			<h3>~ Scrapping de datos de Videojuegos ~</h3>
+			<h1><a href="/">Games JSON 🎮</a></h1>
+			<h3>~ Scraping de datos de Videojuegos ~</h3>
 
 			{% if error %}
 			<div class="message error">{{ error }}</div>

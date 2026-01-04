@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles/main.css') }}"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			href="{{ url_for('static', filename='favicon.png') }}"
+		/>
+
+		<title>404 | Games JSON</title>
+	</head>
+	<body>
+		<div class="container">
+			<h1><a href="/">Games JSON 🎮</a></h1>
+			<h3>~ Scraping de datos de Videojuegos ~</h3>
+
+			<div class="error-404-section">
+				<div class="error-404-container">
+					<div class="error-404-code">404</div>
+					<div class="error-404-emoji">🎮❌🕹️</div>
+					<h2 class="error-404-title">Página no encontrada</h2>
+					<p class="error-404-message">
+						Lo sentimos, la página que estás buscando no existe o ha sido
+						movida.
+					</p>
+					<p class="error-404-submessage">
+						Parece que este nivel aún no está disponible en el juego.
+					</p>
+
+					<div class="error-404-buttons">
+						<a href="/" class="btn btn-home"> 🏠 Volver al Inicio </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

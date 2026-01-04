@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles/main.css') }}"
+		/>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles/500.css') }}"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			href="{{ url_for('static', filename='favicon.png') }}"
+		/>
+		<title>Error 500 - Error Interno del Servidor</title>
+	</head>
+	<body>
+		<div class="container">
+			<h1><a href="/">Games JSON 🎮</a></h1>
+			<h3>~ Scraping de datos de Videojuegos ~</h3>
+
+			<div class="error-500-section">
+				<div class="error-500-container">
+					<div class="error-500-code">500</div>
+					<div class="error-500-emoji">⚠️🔥💥</div>
+					<h2 class="error-500-title">Error Interno del Servidor</h2>
+					<p class="error-500-message">
+						Lo sentimos, algo salió mal en nuestros servidores.
+					</p>
+					<p class="error-500-message">
+						Intenta nuevamente más tarde o vuelve al inicio.
+					</p>
+
+					<div class="error-500-buttons">
+						<a href="/" class="btn btn-home"> 🏠 Volver al Inicio </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

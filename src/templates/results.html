@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" href="../static/styles/base.css" />
-	<link rel="stylesheet" href="../static/styles/results.css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}"/>
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" />
 
-    <title>Resultados - JSONs de Videojuegos</title>
+    <title>Games JSON</title>
 </head>
 <body>
     <div class="container">
-        <h1><a href="/">Games' JSON 🎮</a></h1>
-        <h3>~ Scrapping de datos de Videojuegos ~</h3>
+        <h1><a href="/">Games JSON 🎮</a></h1>
+        <h3>~ Scraping de datos de Videojuegos ~</h3>
 
         {% if error %}
 			<div class="message error">{{ error }}</div>
@@ -62,7 +62,10 @@
                         </button>
                     </form>
 
-                    <span id="pageDisplay">{{ page }}</span>
+                    <form method="POST" class="form-page">
+                        <input type="number" id="pageDisplay" name="page-display" value="{{ page }}" min="1" max="50" required>
+                        <input type="hidden" name="platform" value="{{ platform }}">
+                    </form>
 
                     <form method="POST" action="/search/{{ page }}" onsubmit="showContainer('loader')">
                         <input type="hidden" name="platform" value="{{ platform }}">
@@ -79,11 +82,27 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         const jsonData = {{ data | tojson }};
 
         document.querySelector('.results-title').textContent = `📋 Resultados JSON: ${jsonData.length}`;
+
+        const pageInput = document.querySelector('#pageDisplay');
+
+        pageInput.addEventListener('keydown', (e) => {
+            try {
+                if (e.key === 'Enter') {
+                    const value = parseInt(e.target.value);
+                    if (value < 1 || value > 50) {
+                        throw new Error('Página inválida');
+                    }
+                    gotoPage(e, value);
+                }
+            } catch (error) {
+                showMessage('Página válida: entre 1 y 50', 'error');
+            }
+        });
 
         function showContainer(className) {
             document.querySelector(`.${className}`).hidden = false;
@@ -94,8 +113,8 @@
         }
 
         function showMessage(text, type) {
-            const container = document.querySelector('#messageContainer');  
-            const messageDiv = document.createElement('div');   
+            const container = document.querySelector('#messageContainer');
+            const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}`;
             messageDiv.textContent = text;
             container.appendChild(messageDiv);
@@ -103,7 +122,15 @@
                 container.innerHTML = '';
             }, 5000);
         }
-        
+
+        function gotoPage(event, value) {
+            showContainer('loader');
+
+            const form = document.querySelector('.form-page');
+            form.action = `/search/${value}`;
+            form.submit();
+        }
+
         async function downloadJson() {
             try {
                 const response = await fetch('/download', {
@@ -111,19 +138,19 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ data: jsonData })
                 });
-                
+
                 if (response.ok) {
                     const blob = await response.blob();
                     const filename = response.headers.get('Content-Disposition')
                         ?.split('filename=')[1]?.replace(/"/g, '')
-                    
+
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
                     a.download = filename;
                     a.click();
                     window.URL.revokeObjectURL(url);
-                    
+
                     showMessage('✅ Archivo JSON descargado exitosamente', 'success');
                 } else {
                     const error = await response.json();
@@ -133,7 +160,7 @@
                 showMessage('❌ Error al descargar: ' + error.message, 'error');
             }
         }
-        
+
         async function sendDB() {
             showContainer('loader');
             try {
@@ -144,11 +171,11 @@
                     },
                     body: JSON.stringify({ data: jsonData })
                 });
-                
+
                 const result = await response.json();
 
                 hideContainer('loader');
-                
+
                 if (response.ok) {
                     showMessage('✅ ' + result.message, 'success');
                 } else {
