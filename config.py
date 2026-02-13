@@ -1,11 +1,11 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv(".env.prod")
+load_dotenv(".env.dev")
 
 
 class Config:
-    PORT = int(os.getenv("PORT", 4000))
+    PORT = int(os.getenv("PORT", 5000))
     TOKEN = os.getenv("TOKEN", None)
     API_LOGIN = os.getenv("API_LOGIN", None)
     API_POST_GAME = os.getenv("API_POST_GAME", None)

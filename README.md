@@ -68,8 +68,8 @@ pip install -r requirements.txt
 4. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno:
 
 ```bash
-API_LOGIN=https://localhost:5000/auth/login
-API_POST_GAME=https://localhost:5000/games/
+API_LOGIN=http://localhost:5000/auth/login
+API_POST_GAME=http://localhost:5000/games/
 API_EMAIL=admin_user@gmail.com
 API_PASSWORD=*******
 TOKEN=your_token_if_any
